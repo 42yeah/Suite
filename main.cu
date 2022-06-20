@@ -1,5 +1,3 @@
-// #pragma warning(suppress: 20012-D)
-
 #include "ui_modules/visualizer/App.cuh"
 #include <GLFW/glfw3.h>
 

@@ -1,0 +1,11 @@
+Diagnostics:
+    Suppress:
+        - drv_unsupported_opt
+        - drv_unknown_argument
+CompileFlags:
+    Add: [-std=c++14]
+    Remove: 
+        - "-forward-unknown-to-host-compiler"
+        - "--generate-code=arch=compute_52,code=[compute_52,sm_52]"
+        - "--ccbin=clang++-6.0"
+        - "-rdc=true"

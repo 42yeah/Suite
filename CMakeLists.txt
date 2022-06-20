@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.22)
 
 project(suite CUDA)
 
-set(CMAKE_CUDA_STANDARD 17)
+set(CMAKE_CUDA_STANDARD 14)
 
 find_package(glfw3 REQUIRED)
 find_package(glm REQUIRED)
