@@ -11,12 +11,14 @@ add_executable(suite
         main.cu
         deps/glad/src/glad.cu)
 
+add_subdirectory(modules/model)
 add_subdirectory(ui_modules/visualizer)
 
 target_link_libraries(suite
         glfw
         glm::glm
-        suite_visualizer)
+        suite_visualizer
+        suite_model)
 
 target_include_directories(suite PUBLIC
         glfw
