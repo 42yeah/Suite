@@ -28,4 +28,6 @@ private:
 };
 
 
+void start_app();
+
 #endif //SUITE_APP_H
