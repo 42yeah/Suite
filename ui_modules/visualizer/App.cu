@@ -78,7 +78,7 @@ void App::update_camera() {
         }
 
         glm::vec2 del_cursor_pos = glm::vec2(xpos, ypos) - *start_cursor_pos;
-        del_cursor_pos = del_cursor_pos / glm::vec2(window_w, window_h) * glm::pi<float>();
+        del_cursor_pos = del_cursor_pos / (float) glm::max(window_w, window_h) * glm::pi<float>();
         camera.pitch = start_py->x - del_cursor_pos.y;
         camera.yaw = start_py->y + del_cursor_pos.x;
         should_update_camera = true;
