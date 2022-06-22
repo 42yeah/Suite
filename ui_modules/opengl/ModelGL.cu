@@ -5,7 +5,7 @@
 #include "ModelGL.cuh"
 
 
-ModelGL::ModelGL(const Model &model) : model(model), VAO(0), VBO(0) {
+ModelGL::ModelGL(const Model &model) : VAO(0), VBO(0) {
     const std::vector<Vertex> &vertices = model.get_vertices();
 
     glGenVertexArrays(1, &VAO);

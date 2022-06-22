@@ -7,6 +7,7 @@
 
 #include <vector>
 #include "modules/model/Scene.cuh"
+#include "modules/model/Camera.cuh"
 #include "ui_modules/shader/Program.cuh"
 #include "ModelGL.cuh"
 #include "ObjectGL.cuh"
@@ -20,12 +21,14 @@ public:
 
     SceneGL(SceneGL &&) = delete;
 
-    void render_using(Program &program) const;
+    void render_using(Program &program, const Camera &camera) const;
+
+    glm::vec3 get_center() const;
 
 private:
-    const Scene &scene;
     std::vector<std::shared_ptr<ModelGL> > models;
     std::vector<ObjectGL> objects;
+    glm::vec3 center;
 };
 
 

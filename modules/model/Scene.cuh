@@ -27,6 +27,8 @@ public:
 
     glm::vec3 center() const;
 
+    // TODO: future bounding box - and scene BVH construction
+
 private:
     std::vector<std::shared_ptr<Model> > models;
     std::vector<Object> objects;

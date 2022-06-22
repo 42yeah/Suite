@@ -6,7 +6,7 @@
 #include <map>
 
 
-SceneGL::SceneGL(const Scene &scene) : scene(scene) {
+SceneGL::SceneGL(const Scene &scene) : center(0.0f) {
     std::map<std::shared_ptr<Model>, std::shared_ptr<ModelGL> > lookup;
     for (const auto &model : scene.get_models()) {
         models.push_back(std::make_shared<ModelGL>(*model));
@@ -19,10 +19,15 @@ SceneGL::SceneGL(const Scene &scene) : scene(scene) {
         }
         objects.emplace_back(lookup[obj.model], obj.transform);
     }
+    center = scene.center();
 }
 
-void SceneGL::render_using(Program &program) const {
+void SceneGL::render_using(Program &program, const Camera &camera) const {
     for (const auto &obj : objects) {
-        obj.render_using(program);
+        obj.render_using(program, camera);
     }
+}
+
+glm::vec3 SceneGL::get_center() const {
+    return center;
 }

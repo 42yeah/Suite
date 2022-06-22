@@ -20,13 +20,14 @@ public:
 
     ModelGL(ModelGL &&) = delete;
 
+    /// render the model using program.
+    /// note that the program won't be used.
+    /// \param program the actual program
     void render_using(Program &program) const;
 
-private:
-    const Model &model;
+public:
     GLuint VAO, VBO;
     int num_vertices;
 };
-
 
 #endif //SUITE_MODELGL_CUH

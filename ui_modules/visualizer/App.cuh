@@ -6,9 +6,14 @@
 #define SUITE_APP_H
 
 #include <iostream>
+#include <optional>
 #include <glm/glm.hpp>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include "modules/model/Camera.cuh"
+#include "ui_modules/opengl/ModelGL.cuh"
+#include "ui_modules/opengl/SceneGL.cuh"
+#include "ui_modules/shader/Program.cuh"
 
 
 class App {
@@ -24,7 +29,19 @@ public:
     void run();
 
 private:
+    void update_camera();
+
     GLFWwindow *window;
+
+    std::shared_ptr<ModelGL> model;
+    std::shared_ptr<Program> program;
+    std::shared_ptr<SceneGL> scene;
+
+    // camera manipulation
+    Camera camera;
+    std::optional<glm::vec2> start_cursor_pos, start_py;
+    double previous_instant;
+    float delta_time;
 };
 
 

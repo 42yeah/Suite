@@ -9,6 +9,7 @@
 #include <utility>
 #include <glm/gtc/type_ptr.hpp>
 #include "modules/model/Object.cuh"
+#include "modules/model/Camera.cuh"
 #include "ModelGL.cuh"
 
 
@@ -17,7 +18,7 @@ struct ObjectGL {
 
     ObjectGL(std::shared_ptr<ModelGL> model, glm::mat4 transform);
 
-    void render_using(Program &program) const;
+    void render_using(Program &program, const Camera &camera) const;
 
     std::shared_ptr<ModelGL> model;
     glm::mat4 transform;

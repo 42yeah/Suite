@@ -9,4 +9,5 @@ target_link_libraries(suite_visualizer
 target_include_directories(suite_visualizer PUBLIC
         glfw
         glm::glm
-        ${PROJECT_SOURCE_DIR}/deps/glad/include)
+        ${PROJECT_SOURCE_DIR}/deps/glad/include
+        ${PROJECT_SOURCE_DIR})

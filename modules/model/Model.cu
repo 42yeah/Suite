@@ -16,3 +16,11 @@ Model::Model(std::vector<Vertex> m_vertices) : vertices(std::move(m_vertices)), 
 const std::vector<Vertex> &Model::get_vertices() const {
     return vertices;
 }
+
+glm::vec3 Model::get_center() const {
+    return center;
+}
+
+BBox Model::get_bbox() const {
+    return bbox;
+}

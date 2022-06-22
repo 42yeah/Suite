@@ -13,8 +13,10 @@ ObjectGL::ObjectGL(std::shared_ptr<ModelGL> model, glm::mat4 transform) : model(
 
 }
 
-void ObjectGL::render_using(Program &program) const {
+void ObjectGL::render_using(Program &program, const Camera &camera) const {
     glUniformMatrix4fv(program["model"], 1, GL_FALSE, glm::value_ptr(transform));
+    glUniformMatrix4fv(program["view"], 1, GL_FALSE, glm::value_ptr(camera.view));
+    glUniformMatrix4fv(program["perspective"], 1, GL_FALSE, glm::value_ptr(camera.perspective));
     if (model == nullptr) {
         std::cerr << "WARNING! Null model detected; that's are not supposed to happen." << std::endl;
     }

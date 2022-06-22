@@ -25,6 +25,10 @@ public:
 
     const std::vector<Vertex> &get_vertices() const;
 
+    glm::vec3 get_center() const;
+
+    BBox get_bbox() const;
+
 private:
     std::vector<Vertex> vertices;
     glm::vec3 center;

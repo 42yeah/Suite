@@ -16,6 +16,7 @@ add_subdirectory(modules/model)
 add_subdirectory(ui_modules/visualizer)
 add_subdirectory(ui_modules/opengl)
 add_subdirectory(ui_modules/shader)
+add_subdirectory(ui_modules/primitives)
 
 target_link_libraries(suite
         glfw
@@ -24,7 +25,8 @@ target_link_libraries(suite
         suite_visualizer
         suite_model
         suite_opengl
-        suite_program)
+        suite_program
+        suite_prim)
 
 target_include_directories(suite PUBLIC
         glfw

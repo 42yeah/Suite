@@ -86,6 +86,14 @@ std::vector<Object> Scene::get_objects() const {
 }
 
 glm::vec3 Scene::center() const {
-    // TODO: return the summed transformed center of the scene.
-    return glm::vec3(0.0f);
+    glm::vec3 center(0.0f);
+    // 1. sum transformed center
+    for (const auto &obj : objects) {
+        center += glm::vec3(obj.transform * glm::vec4(obj.model->get_center(), 1.0f));
+    }
+    // 2. calculate average
+    if (objects.size() > 0.0f) {
+        center /= objects.size();
+    }
+    return center;
 }

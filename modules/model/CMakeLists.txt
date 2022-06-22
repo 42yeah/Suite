@@ -1,4 +1,4 @@
-add_library(suite_model Model.cu Model.cuh Scene.cu Scene.cuh BBox.cuh Object.cu Object.cuh)
+add_library(suite_model Model.cu Model.cuh Scene.cu Scene.cuh BBox.cuh Object.cu Object.cuh Camera.cuh)
 
 target_link_libraries(suite_model
         assimp::assimp
