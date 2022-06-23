@@ -14,6 +14,7 @@
 #include "ui_modules/opengl/ModelGL.cuh"
 #include "ui_modules/opengl/SceneGL.cuh"
 #include "ui_modules/shader/Program.cuh"
+#include "ui_modules/scripting/Scripting.cuh"
 
 
 class App {
@@ -28,10 +29,13 @@ public:
 
     void run();
 
+    void show_scripting_layer_window();
+
 private:
     void update_camera();
 
     GLFWwindow *window;
+    glm::ivec2 window_size;
 
     std::shared_ptr<Program> program;
     std::shared_ptr<Program> bbox_program;
@@ -42,6 +46,9 @@ private:
     std::optional<glm::vec2> start_cursor_pos, start_py;
     double previous_instant;
     float delta_time;
+
+    // scripting layer
+    ScriptingLayer layer;
 };
 
 
