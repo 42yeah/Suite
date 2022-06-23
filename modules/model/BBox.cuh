@@ -18,6 +18,17 @@ struct BBox {
         max = glm::max(max, p);
     }
 
+    BBox operator+(const BBox &another) const {
+        BBox new_bbox;
+        new_bbox.min = glm::min(min, another.min);
+        new_bbox.max = glm::max(max, another.max);
+        return new_bbox;
+    }
+
+    glm::vec3 span() const {
+        return max - min;
+    }
+
     glm::vec3 min, max;
 };
 

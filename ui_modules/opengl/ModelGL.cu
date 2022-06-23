@@ -5,7 +5,7 @@
 #include "ModelGL.cuh"
 
 
-ModelGL::ModelGL(const Model &model) : VAO(0), VBO(0) {
+ModelGL::ModelGL(const Model &model) : VAO(0), VBO(0), bbox(model.get_bbox()) {
     const std::vector<Vertex> &vertices = model.get_vertices();
 
     glGenVertexArrays(1, &VAO);
@@ -32,5 +32,9 @@ void ModelGL::render_using(Program &program) const {
     glBindVertexArray(VAO);
 
     glDrawArrays(GL_TRIANGLES, 0, num_vertices);
+}
+
+BBox ModelGL::get_bbox() const {
+    return bbox;
 }
 

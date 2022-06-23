@@ -33,8 +33,8 @@ private:
 
     GLFWwindow *window;
 
-    std::shared_ptr<ModelGL> model;
     std::shared_ptr<Program> program;
+    std::shared_ptr<Program> bbox_program;
     std::shared_ptr<SceneGL> scene;
 
     // camera manipulation

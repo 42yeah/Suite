@@ -13,6 +13,8 @@ add_executable(suite
         deps/glad/src/glad.cu)
 
 add_subdirectory(modules/model)
+add_subdirectory(modules/geoquery)
+add_subdirectory(modules/bvh)
 add_subdirectory(ui_modules/visualizer)
 add_subdirectory(ui_modules/opengl)
 add_subdirectory(ui_modules/shader)
@@ -24,6 +26,8 @@ target_link_libraries(suite
         assimp::assimp
         suite_visualizer
         suite_model
+        suite_geoquery
+        suite_bvh
         suite_opengl
         suite_program
         suite_prim)

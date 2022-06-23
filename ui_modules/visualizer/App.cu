@@ -2,10 +2,11 @@
 // Created by 42yea on 20/06/2022.
 //
 
-#include <glm/gtc/type_ptr.hpp>
 #include "App.cuh"
+#include <glm/gtc/type_ptr.hpp>
+#include "ui_modules/primitives/prim.cuh"
 
-constexpr int window_w = 1280, window_h = 720;
+constexpr int window_w = 1280 * 2, window_h = 720 * 2;
 
 
 App::App() {
@@ -16,6 +17,7 @@ App::App() {
     glEnable(GL_DEPTH_TEST);
 
     program = std::make_shared<Program>("shaders/default/default.vert", "shaders/default/default.frag");
+    bbox_program = std::make_shared<Program>("shaders/bbox/bbox.vert", "shaders/bbox/bbox.frag");
     camera = Camera(glm::vec3(0.0f, 0.0f, 5.0f), glm::radians(45.0f), (float) window_w / window_h, 0.1f, 100.0f);
 
     Scene scene_raw("models/ball.dae");
@@ -40,6 +42,11 @@ void App::run() {
 
         prog.use();
         scene->render_using(prog, camera);
+
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        bbox_program->use();
+        gen_bounding_box(scene->get_objects()[0].bbox()).render_using(*bbox_program, camera);
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
         glfwSwapBuffers(window);
     }

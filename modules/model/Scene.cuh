@@ -9,6 +9,7 @@
 #include <vector>
 #include "Model.cuh"
 #include "Object.cuh"
+#include "BBox.cuh"
 
 
 class Scene {
@@ -27,7 +28,10 @@ public:
 
     glm::vec3 center() const;
 
-    // TODO: future bounding box - and scene BVH construction
+    BBox bbox() const;
+
+    // TODO: simple path tracing
+    // TODO: software rasterizer
 
 private:
     std::vector<std::shared_ptr<Model> > models;

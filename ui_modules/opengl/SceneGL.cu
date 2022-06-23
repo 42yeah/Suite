@@ -31,3 +31,19 @@ void SceneGL::render_using(Program &program, const Camera &camera) const {
 glm::vec3 SceneGL::get_center() const {
     return center;
 }
+
+BBox SceneGL::bbox() const {
+    BBox bbox;
+    for (const auto &obj : objects) {
+        bbox = bbox + obj.bbox();
+    }
+    return bbox;
+}
+
+const std::vector<std::shared_ptr<ModelGL> > &SceneGL::get_models() const {
+    return models;
+}
+
+std::vector<ObjectGL> SceneGL::get_objects() const {
+    return objects;
+}

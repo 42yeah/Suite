@@ -25,6 +25,12 @@ public:
 
     glm::vec3 get_center() const;
 
+    BBox bbox() const;
+
+    const std::vector<std::shared_ptr<ModelGL> > &get_models() const;
+
+    std::vector<ObjectGL> get_objects() const;
+
 private:
     std::vector<std::shared_ptr<ModelGL> > models;
     std::vector<ObjectGL> objects;

@@ -8,6 +8,7 @@
 #include <glm/glm.hpp>
 #include <utility>
 #include "Model.cuh"
+#include "BBox.cuh"
 
 
 struct Object {
@@ -17,6 +18,13 @@ struct Object {
 
     Object(std::shared_ptr<Model> model, glm::mat4 transform) : model(std::move(model)), transform(transform) {
 
+    }
+
+    BBox bbox() const {
+        BBox bbox = model->get_bbox();
+        bbox.min = glm::vec3(transform * glm::vec4(bbox.min, 1.0f));
+        bbox.max = glm::vec3(transform * glm::vec4(bbox.max, 1.0f));
+        return bbox;
     }
 
     std::shared_ptr<Model> model;

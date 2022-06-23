@@ -8,6 +8,7 @@
 #include <glad/glad.h>
 #include "ui_modules/shader/Program.cuh"
 #include "modules/model/Model.cuh"
+#include "modules/model/BBox.cuh"
 
 
 class ModelGL {
@@ -25,9 +26,12 @@ public:
     /// \param program the actual program
     void render_using(Program &program) const;
 
+    BBox get_bbox() const;
+
 public:
     GLuint VAO, VBO;
     int num_vertices;
+    BBox bbox;
 };
 
 #endif //SUITE_MODELGL_CUH

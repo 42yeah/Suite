@@ -97,3 +97,11 @@ glm::vec3 Scene::center() const {
     }
     return center;
 }
+
+BBox Scene::bbox() const {
+    BBox bbox;
+    for (const auto &obj : objects) {
+        bbox = bbox + obj.bbox();
+    }
+    return bbox;
+}

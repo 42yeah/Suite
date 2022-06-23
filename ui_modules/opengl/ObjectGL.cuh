@@ -20,6 +20,8 @@ struct ObjectGL {
 
     void render_using(Program &program, const Camera &camera) const;
 
+    BBox bbox() const;
+
     std::shared_ptr<ModelGL> model;
     glm::mat4 transform;
 };

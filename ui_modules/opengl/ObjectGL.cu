@@ -23,3 +23,10 @@ void ObjectGL::render_using(Program &program, const Camera &camera) const {
     model->render_using(program);
 }
 
+BBox ObjectGL::bbox() const {
+    BBox bbox = model->get_bbox();
+    bbox.min = glm::vec3(transform * glm::vec4(bbox.min, 1.0f));
+    bbox.max = glm::vec3(transform * glm::vec4(bbox.max, 1.0f));
+    return bbox;
+}
+
