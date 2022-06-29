@@ -29,6 +29,11 @@ struct BBox {
         return max - min;
     }
 
+    float surface_area() const {
+        const glm::vec3 s = span();
+        return 2.0f * (s.x * s.y + s.x * s.z + s.y * s.z);
+    }
+
     glm::vec3 min, max;
 };
 

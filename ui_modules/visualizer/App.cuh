@@ -15,6 +15,7 @@
 #include "ui_modules/opengl/SceneGL.cuh"
 #include "ui_modules/shader/Program.cuh"
 #include "ui_modules/scripting/Scripting.cuh"
+#include "modules/bvh/BVH.cuh"
 
 
 class App {
@@ -29,17 +30,13 @@ public:
 
     void run();
 
-    void show_scripting_layer_window();
-
 private:
     void update_camera();
 
+    void show_scripting_layer_window();
+
     GLFWwindow *window;
     glm::ivec2 window_size;
-
-    std::shared_ptr<Program> program;
-    std::shared_ptr<Program> bbox_program;
-    std::shared_ptr<SceneGL> scene;
 
     // camera manipulation
     Camera camera;
@@ -49,6 +46,12 @@ private:
 
     // scripting layer
     ScriptingLayer layer;
+    char scripting_layer_input[512] = { 0 };
+    bool scripting_layer_enter_key_pressed;
+
+    // toys
+    std::shared_ptr<Program> program;
+    std::shared_ptr<SceneGL> scene;
 };
 
 

@@ -14,6 +14,15 @@
 
 class BVH {
 public:
+    struct Node {
+        Node();
+
+        Node(int start, int size, int l, int r, BBox bbox);
+
+        int start, size, l, r;
+        BBox bbox;
+    };
+
     /// construct bounding volume hierarchy (BVH) for a scene.<br>
     ///
     /// procedure: <br>
@@ -26,18 +35,16 @@ public:
     ///   3.1. evaluate cost (heuristic SAH), keep track of lowest cost partition <br>
     /// 4. recurse on lowest cost partition found (or make leaf).
     /// \param scene input scene
-    explicit BVH(const Scene &scene);
+    /// \param n_buckets number of buckets
+    explicit BVH(const Scene &scene, int n_buckets);
+
+    const std::vector<Node> &get_nodes() const;
+
+    BVH(const BVH &) = delete;
+
+    BVH(BVH &&) = default;
 
 private:
-    struct Node {
-        Node();
-
-        Node(int start, int size, int l, int r, BBox bbox);
-
-        int start, size, l, r;
-        BBox bbox;
-    };
-
     std::vector<Triangle> primitives;
     std::vector<Node> nodes;
 };

@@ -4,6 +4,7 @@
 
 #include "App.cuh"
 #include <glm/gtc/type_ptr.hpp>
+#include <stack>
 #include <imgui.h>
 #include <backends/imgui_impl_glfw.h>
 #include <backends/imgui_impl_opengl3.h>
@@ -13,7 +14,7 @@
 constexpr int window_w = 1280 * 2, window_h = 720 * 2;
 
 
-App::App() : window_size(0) {
+App::App() : window_size(0), scripting_layer_enter_key_pressed(false) {
     window = glfwCreateWindow(window_w, window_h, "Suite", nullptr, nullptr);
     glfwMakeContextCurrent(window);
     gladLoadGL();
@@ -21,21 +22,20 @@ App::App() : window_size(0) {
     glEnable(GL_DEPTH_TEST);
 
     program = std::make_shared<Program>("shaders/default/default.vert", "shaders/default/default.frag");
-    bbox_program = std::make_shared<Program>("shaders/bbox/bbox.vert", "shaders/bbox/bbox.frag");
     camera = Camera(glm::vec3(0.0f, 0.0f, 5.0f), glm::radians(45.0f), (float) window_w / window_h, 0.1f, 100.0f);
 
-    Scene scene_raw("models/ball.dae");
+    Scene scene_raw("models/cow.dae");
     scene = std::make_shared<SceneGL>(scene_raw);
 
     previous_instant = glfwGetTime();
     delta_time = 0.0f;
 
-     ImGui::CreateContext();
-     ImGuiIO &io = ImGui::GetIO();
-     ImGui_ImplGlfw_InitForOpenGL(window, true);
-     ImGui_ImplOpenGL3_Init("#version 330 core");
-     io.IniFilename = nullptr;
-     io.FontGlobalScale = 2.0f;
+    ImGui::CreateContext();
+    ImGuiIO &io = ImGui::GetIO();
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplOpenGL3_Init("#version 330 core");
+    io.IniFilename = nullptr;
+    io.FontGlobalScale = 2.0f;
 }
 
 void App::run() {
@@ -53,11 +53,6 @@ void App::run() {
 
         prog.use();
         scene->render_using(prog, camera);
-
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        bbox_program->use();
-        gen_bounding_box(scene->get_objects()[0].bbox()).render_using(*bbox_program, camera);
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
@@ -121,16 +116,29 @@ void App::update_camera() {
 }
 
 void App::show_scripting_layer_window() {
-    static char buf[1024] = { 0 };
-    ImGui::Begin("Lua Scripting Layer");
+    ImGui::SetNextWindowSize({ 1000, 300 }, ImGuiCond_Once);
+    if (!ImGui::Begin("Lua Scripting Layer")) {
+        ImGui::End();
+        return;
+    }
 
     // ImGui::SetNextItemWidth(-std::numeric_limits<float>::min());
-    ImGui::InputText("command", buf, sizeof(buf));
+    ImGui::InputText("command", scripting_layer_input, sizeof(scripting_layer_input));
+    if (glfwGetKey(window, GLFW_KEY_ENTER)) {
+        if (!scripting_layer_enter_key_pressed) {
+            layer(scripting_layer_input);
+            std::memset(scripting_layer_input, 0, sizeof(scripting_layer_input));
+        }
+        scripting_layer_enter_key_pressed = true;
+    } else {
+        scripting_layer_enter_key_pressed = false;
+    }
 
     ImGui::SameLine();
 
     if (ImGui::Button("OK")) {
-        layer(buf);
+        layer(scripting_layer_input);
+        std::memset(scripting_layer_input, 0, sizeof(scripting_layer_input));
     }
 
     ImGui::BeginTable("error_list", 1);
