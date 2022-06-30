@@ -10,6 +10,15 @@
 
 
 
+glm::mat4 ai_mat_to_glm(const aiMatrix4x4 &m) {
+    return {
+        glm::vec4(m.a1, m.b1, m.c1, m.d1),
+        glm::vec4(m.a2, m.b2, m.c2, m.d2),
+        glm::vec4(m.a3, m.b3, m.c3, m.d3),
+        glm::vec4(m.a4, m.b4, m.c4, m.d4)
+    };
+}
+
 Scene::Scene(const std::string &path) {
     Assimp::Importer importer;
 
@@ -49,29 +58,25 @@ Scene::Scene(const std::string &path) {
     }
 
     // construct objects from scene hierarchy
-    std::queue<std::pair<aiNode *, aiMatrix4x4> > queue;
-    queue.push({ scene->mRootNode, scene->mRootNode->mTransformation });
+    std::queue<std::pair<aiNode *, glm::mat4> > queue;
+    queue.push({ scene->mRootNode, ai_mat_to_glm(scene->mRootNode->mTransformation) });
 
     while (!queue.empty()) {
         aiNode *node = queue.front().first;
-        const aiMatrix4x4 &trans = queue.front().second;
-
-        glm::mat4 transposed;
-        std::memcpy(&transposed, &trans, sizeof(glm::mat4));
-        transposed = glm::transpose(transposed);
+        glm::mat4 trans = queue.front().second;
 
         queue.pop();
 
         // mMesh should be consistent with models
         for (int i = 0; i < node->mNumMeshes; i++) {
-            Object object(models[node->mMeshes[i]], transposed);
+            Object object(models[node->mMeshes[i]], trans);
             objects.push_back(std::move(object));
         }
 
         // for each child, apply the transformation
         for (int i = 0; i < node->mNumChildren; i++) {
             aiNode *child = node->mChildren[i];
-            aiMatrix4x4 child_transform = trans * child->mTransformation;
+            glm::mat4 child_transform = trans * ai_mat_to_glm(child->mTransformation);
             queue.push({ child, child_transform });
         }
     }

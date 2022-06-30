@@ -6,4 +6,5 @@ target_link_libraries(suite_model
 
 target_include_directories(suite_model PUBLIC
         assimp::assimp
-        glm::glm)
+        glm::glm
+        ${PROJECT_SOURCE_DIR})

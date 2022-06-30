@@ -4,6 +4,9 @@ project(suite CUDA)
 
 set(CMAKE_CUDA_STANDARD 17)
 
+# enable CUDA relocatable device code
+set(CMAKE_CUDA_SEPARABLE_COMPILATION TRUE)
+
 find_package(glfw3 REQUIRED)
 find_package(glm REQUIRED)
 find_package(assimp REQUIRED)
@@ -16,11 +19,15 @@ add_subdirectory(deps/lua-5.4.4)
 add_subdirectory(modules/model)
 add_subdirectory(modules/geoquery)
 add_subdirectory(modules/bvh)
+add_subdirectory(modules/texture)
+add_subdirectory(modules/softras)
+add_subdirectory(modules/cuda)
 add_subdirectory(ui_modules/visualizer)
 add_subdirectory(ui_modules/opengl)
 add_subdirectory(ui_modules/shader)
 add_subdirectory(ui_modules/primitives)
 add_subdirectory(ui_modules/scripting)
+
 
 target_link_libraries(suite
         glfw
@@ -34,7 +41,10 @@ target_link_libraries(suite
         suite_opengl
         suite_program
         suite_prim
-        suite_scripting)
+        suite_scripting
+        suite_softras
+        suite_texture
+        suite_cuda)
 
 target_include_directories(suite PUBLIC
         glfw

@@ -4,3 +4,4 @@ build
 .idea
 .cache
 runtime/*.dll
+runtime/result.jpg

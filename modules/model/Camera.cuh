@@ -36,6 +36,11 @@ struct Camera {
         perspective = glm::perspective(fovy, aspect, near, far);
     }
 
+    inline void update_camera_no_pyr() {
+        view = glm::lookAt(eye, center, glm::vec3(0.0f, 1.0f, 0.0f));
+        perspective = glm::perspective(fovy, aspect, near, far);
+    }
+
     glm::vec3 eye, center, front;
     glm::mat4 view, perspective;
 

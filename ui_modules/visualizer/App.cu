@@ -24,7 +24,7 @@ App::App() : window_size(0), scripting_layer_enter_key_pressed(false) {
     program = std::make_shared<Program>("shaders/default/default.vert", "shaders/default/default.frag");
     camera = Camera(glm::vec3(0.0f, 0.0f, 5.0f), glm::radians(45.0f), (float) window_w / window_h, 0.1f, 100.0f);
 
-    Scene scene_raw("models/cow.dae");
+    Scene scene_raw("models/cbox_lambertian.dae");
     scene = std::make_shared<SceneGL>(scene_raw);
 
     previous_instant = glfwGetTime();
